@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+    <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Button</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for country in countries %}
+        <tr><td>{{ country.name }} </td><td> <a href ="./{{country.name}}">More Info</a> 
+    {% endfor %}
+    </tbody>
+    </table>
+</html>
