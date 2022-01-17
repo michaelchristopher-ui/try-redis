@@ -1,0 +1,13 @@
+venv
+*.pyc
+staticfiles
+.env
+db.sqlite3
+.tmp_commits_squashed
+.idea/
+.vscode
+.DS_Store
+XDG_CACHE_HOME
+
+# Redis Server
+*.rdb

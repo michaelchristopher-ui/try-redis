@@ -1,6 +1,7 @@
 from typing import ContextManager
 from django.shortcuts import render
 from django.core.cache import cache
+import django_rq
 
 from .models import Country
 # Create your views here.
@@ -35,6 +36,8 @@ def entry(request, entry_name):
     context = {'entry': entry, 'source': source}
     return render(request, 'htmls/entry.html', context)
 
+def fetchToken(request):
+    return render(request , 'htmls/fetchToken.html')
 
 class MQHome(APIView):
 
@@ -49,9 +52,13 @@ class MQHome(APIView):
         if serializer.is_valid():
             serializer.save()
             # With the below code, jobs can still be lost since Redis is a fire and forget system.
-            QManager.enqueue(
-                QJobs.send_message_to_firebase_push_notifications, "message")
+            #This is equal to executing QJobs.send_message_to_firebase_push_notifications("IT ALSO WORKSSSS") but within another worker
+            django_rq.get_queue("default").enqueue(
+                QJobs.send_message_to_firebase_push_notifications, "IT ALSO WORKSSSS")
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         # Track here
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+

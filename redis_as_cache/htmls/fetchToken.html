@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+    <!-- <script src="/static/js/firebase-messaging-sw.js"></script>
+
+     -->
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBMT3WLPZ6r64f4cnios6223xlJnX8tjV8",
+        authDomain: "trial-project-88bcb.firebaseapp.com",
+        databaseURL: "https://trial-project-88bcb.firebaseio.com",
+        projectId: "trial-project-88bcb",
+        storageBucket: "trial-project-88bcb.appspot.com",
+        messagingSenderId: "451141671906",
+        appId: "1:451141671906:web:69034d788dd218804d37bb",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      //firebase.analytics();
+
+      const messaging = firebase.messaging();
+      console.log(messaging.getToken());
+      //The vapidkey is obtained by generation at the Web Push certificates section
+      //of the web configuration of the Cloud Messaging settings on Firebase.
+      messaging
+        .getToken({
+          vapidKey:
+            "BGMdonmEs2TPGuJrkJH4eHLnO1X76ntPeW9_QOKLHLdG8yPknFOwJMwstgrgLCpq_3q92_hbsRuHe8yLQNBjj6Y",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log(currentToken);
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+        });
+
+      messaging
+        .requestPermission()
+        .then(function () {
+          console.log("Notification permission granted.");
+          return messaging.getToken();
+        })
+        .catch(function (err) {
+          console.log("Unable to get permission to notify.", err);
+        });
+
+      messaging.onMessage((payload) => {
+        console.log("Message received. ", payload);
+      });
+    </script>
+  </head>
+
+  <body></body>
+</html>

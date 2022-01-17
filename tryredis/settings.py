@@ -141,6 +141,10 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#--------------------------------------------------------------------
+# DJANGO-RQ Settings
+#--------------------------------------------------------------------
+
 RQ_QUEUES = {
     'default': {
         'USE_REDIS_CACHE': 'default'
@@ -152,3 +156,12 @@ RQ_QUEUES = {
     # },
 
 }
+
+#--------------------------------------------------------------------
+# Firebase
+#--------------------------------------------------------------------
+
+
+FCM_API = os.getenv('FCM_API', '')
+FIREBASE_URL = os.getenv('FIREBASE_URL','')
+FIREBASE_REGISTRATION_ID = os.getenv('FIREBASE_REGISTRATION_ID', '')
