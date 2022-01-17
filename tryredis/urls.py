@@ -20,5 +20,4 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('redis_as_cache/', include('redis_as_cache.urls'), name="redis_as_cache"),
-    #path('redis_as_mq/', include('redis_as_mq.urls'), name="redis_as_mq")
 ]

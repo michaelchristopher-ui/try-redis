@@ -10,7 +10,7 @@ from .serializers import CountrySerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from redis_as_mq.queue_funcs import QManager, QJobs
+from redis_as_cache.queue_funcs import QManager, QJobs
 
 
 def home(request):
@@ -52,7 +52,9 @@ class MQHome(APIView):
         if serializer.is_valid():
             serializer.save()
             # With the below code, jobs can still be lost since Redis is a fire and forget system.
-            #This is equal to executing QJobs.send_message_to_firebase_push_notifications("IT ALSO WORKSSSS") but within another worker
+            # This is equal to executing 
+            # QJobs.send_message_to_firebase_push_notifications("IT ALSO WORKSSSS")
+            # but within another worker
             django_rq.get_queue("default").enqueue(
                 QJobs.send_message_to_firebase_push_notifications, "IT ALSO WORKSSSS")
 

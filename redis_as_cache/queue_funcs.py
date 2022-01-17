@@ -21,7 +21,7 @@ class QManager:
 # Once a method in this class has been changed, please restart the workers
 class QJobs:
         
-    def send_notification(registration_ids, message_title, message_desc, img_link, icon_link):
+    def send_notification(registration_ids, message_title, message_desc):
         # fcm_api is filled in with the cloud messaging server key
         #TODO: Put the fcm api key in the env
         fcm_api = getattr(settings, "FCM_API", "")
@@ -48,5 +48,5 @@ class QJobs:
         # If that is not possible, then we can opt to put it in env
         registration = [getattr(settings, "FIREBASE_REGISTRATION_ID", "")]
         message_title = "New Message from Try-Redis"
-        QJobs.send_notification(registration, message_title, message_desc, "", "")
+        QJobs.send_notification(registration, message_title, message_desc)
         print("sent")  
